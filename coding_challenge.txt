@@ -1,0 +1,18 @@
+# Coding Challenge for Data Engineer
+This coding problem is a small picture of the kind of work the scraping team does and is an opportunity for you to demonstrate your skills.
+
+Write a script to scrape data from the Idaho License Verification website: idbop.mylicense.com/verification/Search.aspx.
+
+Please do this in Python 3 and share the code as a GitHub link.
+The script should return all Pharmacists with a last name that starts with "L" as a .csv file with the following information:
+- First Name
+- Middle Name
+- Last Name
+- License Number
+- License Type
+- Status
+- Original Issued Date
+- Expiry
+- Renewed
+
+The script should be written to be able to easily adapt to returning a different license type and different last name starting letter.

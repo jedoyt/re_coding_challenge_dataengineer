@@ -1,0 +1,14 @@
+Creating a virtual environment
+$ python3 -m venv venv
+
+Activating virtual environment
+$ source venv/bin/activate
+
+Deactivating virtual environment
+$ deactivate
+
+Install all needed packages
+$ pip install -r requirements.txt
+
+How to check Chrome browser version
+on address field enter: chrome://version
