@@ -20,10 +20,18 @@ The script should return all Pharmacists with a last name that starts with "L" a
 
 The script should be written to be able to easily adapt to returning a different license type and different last name starting letter.
 
-## Preparations before running main.py
+## Quick Steps
 1. Make use have Chrome browser installed
-2. Install all required packages. Go to command line and make sure that you are on the project directory. Run the code below:
-  `$ pip install -r requirements.txt`
-3. On line 14 of main.py, Choose the right OS for the chromedriver by changing the second argument next to `os.getcwd()`
-  choices: `linux`, `mac`, `win`
-5. Run `main.py`
+2. Your version of Chrome must match with the existing chromedriver of this repo
+  - installed version of drivers: 109.0.5414.74
+  - link to source of drivers: https://chromedriver.storage.googleapis.com/index.html
+3. Install all required packages. Go to command line and make sure that you are on the project directory. Run the code below:
+  - `$ pip install -r requirements.txt`
+4. On line 5 of main.py, Choose the right OS for the chromedriver by changing the value of the variable `machine_os`
+  - choices: `"linux"`, `"mac"`, `"win"`
+  - e.g. `machine_os = "mac"`
+5. Set field inputs
+  - `licensetype_select = "Pharmacist"`
+  - `lastname_str = "L"`
+6. Run `main.py`
+7. Check the report from the generated `records.csv` file
