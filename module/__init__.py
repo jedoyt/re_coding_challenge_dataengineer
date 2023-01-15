@@ -60,18 +60,6 @@ def set_chromedriver_os(cdriver_os='mac'):
     }   
     return os.path.join(os.getcwd(), chrome_drivers[cdriver_os])
 
-# Initial/placeholder storage of scraped data
-data_dict = {"firstname":[],
-             "middlename": [],
-             "lastname": [],
-             "license_no": [],
-             "license_type": [],
-             "status": [],
-             "orig_issue_date": [],
-             "expiry": [],
-             "renewed": []
-}
-
 def input_and_search(driver, licensetype_select, lastname_str):
     # Input data on fields
     select_licensetype = Select(driver.find_element(By.ID, 't_web_lookup__license_type_name'))
@@ -84,24 +72,42 @@ def input_and_search(driver, licensetype_select, lastname_str):
     search_btn = driver.find_element(By.ID, 'sch_button')
     search_btn.click()
 
-
-
-# Iteration on pagination links
-
-# Scrape data from one page
+# Scrape data from one page of search result
 def get_one_page_data(driver):
     '''
     input_and_search() function must run first before running this function
+    driver: selenium.webdriver.Chrome() object
+    returns a pandas DataFrame containing the data of the professionals
     '''
-    # Scraping in for loop iteration on results from the current page
-    for i in range(3,43):
-        print(f"Fetching data: {i}...")
-        id = f'datagrid_results__ctl{i}_name'
-        data = driver.find_element(By.ID,id)
-        print(data.text)
-        data.click()
-        driver.switch_to.window(driver.window_handles[1])
+    data_dict = {
+            "firstname":[],
+            "middlename": [],
+            "lastname": [],
+            "license_no": [],
+            "license_type": [],
+            "status": [],
+            "orig_issue_date": [],
+            "expiry": [],
+            "renewed": []
+    }
+    # Get all anchor tags from the results table ("datagrid_results")
+    results_table_elem = driver.find_element(By.ID, "datagrid_results")
+    a_tags = results_table_elem.find_elements(By.TAG_NAME, "a") # All anchor tags from the table
 
+    # Separate names of the professionals from pagination of search results
+    # Exclude the first element on a_tags list (It is a link to "License #")
+    pros_indices = [a_tags.index(tag) for tag in a_tags[1:] if tag.text.isnumeric() == False]
+
+    # Scraping in for loop iteration on results from the current page
+    for i in pros_indices:
+        print(f"Fetching data: index-{i}...")
+        
+        data = a_tags[i]
+        print(f"Data found:",data.text)
+        print("Accessed Element:", data)
+        data.click() # Opens a new tab
+        driver.switch_to.window(driver.window_handles[1]) # Switches to the new tab
+        # Fetch the data from the new tab containing the information about the professional
         data_dict['firstname'].append(driver.find_element(By.ID, '_ctl27__ctl1_first_name').text)
         data_dict['middlename'].append(driver.find_element(By.ID, '_ctl27__ctl1_m_name').text)
         data_dict['lastname'].append(driver.find_element(By.ID, '_ctl27__ctl1_last_name').text)
@@ -114,12 +120,9 @@ def get_one_page_data(driver):
 
         btn_close = driver.find_element(By.NAME, "btn_close")
         btn_close.click()
-        driver.switch_to.window(driver.window_handles[0]) 
+        driver.switch_to.window(driver.window_handles[0])
+    return pd.DataFrame(data_dict)
 
-def generate_df_and_csv():
-    data_df = pd.DataFrame(data_dict)
-
-    print(data_df)
-    data_df.to_csv("records.csv",index=False)
-
-    return data_df
+def generate_csv(df):
+    df.to_csv("records.csv",index=False)
+    print("Generated/Updated 'records.csv'!")
