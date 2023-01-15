@@ -26,12 +26,15 @@ The script should be written to be able to easily adapt to returning a different
   - installed version of drivers: 109.0.5414.74
   - link to source of drivers: https://chromedriver.storage.googleapis.com/index.html
 3. Install all required packages. Go to command line and make sure that you are on the project directory. Run the code below:
-  - `$ pip install -r requirements.txt`
-4. On line 5 of main.py, Choose the right OS for the chromedriver by changing the value of the variable `machine_os`
-  - choices: `"linux"`, `"mac"`, `"win"`
-  - e.g. `machine_os = "mac"`
-5. Set field inputs
-  - `licensetype_select = "Pharmacist"`
-  - `lastname_str = "L"`
-6. Run `main.py`
-7. Check the report from the generated `records.csv` file
+  - It is recommended also to create a virtual environment first to avoid messing up with the versions of your current packages in Python
+    - `$ python3 -m venv venv` (Creates a virtual environment within the project directory)
+    - `$ source venv/bin/activate` (Activates the virtual environment. After activating, you may now do the `pip install`'s
+  - `$ pip install -r requirements.txt` (Installs the required packages)
+4. Run `main.py`
+  - Once it runs, the command line with ask for the following inputs:
+    - `Select OS (linux, mac, or win): ` (choices are limited to these three--- linux, mac, win. No need to enclose in quotes.)
+      - Once entered, the command line with display the machine's current version of Chrome and the existing version of Chrome Driver
+      - The link to the source of Chrome's webdrivers are also provided if there is a need to update or downgrade the webdriver to match your current Chrome browser version
+    - `Enter profession: ` (Choose the profession as shown on list. Case sensitive, and also no need to enclose in quotes.)
+    - `Enter keyword for Last Name field: ` (Enter search string keyword for the last name. Again, no need to enclose in quotes.)
+5. Check the report from the generated `records_<timestamp>_(<search+strings>).csv` file
