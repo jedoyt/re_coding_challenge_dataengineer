@@ -40,7 +40,7 @@ print("No. of page results:", len(pagination_indices))
 print("Professionals:",pros_indices)
 print("Pagination indices:",pagination_indices)
 print("Page Result Links:", [elem.text for elem in page_link_elems])
-'''
+
 # Create initial DataFrame and csv file
 data_dict = {"firstname":[],
                 "middlename": [],
@@ -57,25 +57,26 @@ data_df = pd.DataFrame(data_dict)
 add_df = get_one_page_data(driver)
 data_df = pd.concat([data_df,add_df],axis=0)
 generate_csv(data_df)
-'''
+
 # Get data on next pages of search results
 if len(page_link_elems) > 0:
     for i in pagination_indices:
-        driver.switch_to.window(driver.window_handles[0])
+        results_table_elem = driver.find_element(By.ID, "datagrid_results")
+        a_tags = results_table_elem.find_elements(By.TAG_NAME, "a") # All anchor tags from the table
+        time.sleep(5)
+        
         next_page = a_tags[i]
         print("Accessed element:",str(next_page))
-        try:
-            print("Now trying to click...")
-            next_page.click()
-            print("Accessed next page results!")
-        except TypeError:
-            print("Now in except block due to TypeError")
-            time.sleep(5)
-            next_page.click()
+        print("Now trying to click...")
+        next_page.click()
+        print("Accessed next page results!")
+
         df=pd.read_csv('records.csv')
         print("Loaded existing records!")
         add_df = get_one_page_data(driver)
         df = pd.concat([df,add_df],axis=0)
         print("Concatenated additional records!")
         generate_csv(df)
-        time.sleep(5)
+
+# Quit driver
+driver.quit()

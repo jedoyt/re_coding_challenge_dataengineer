@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.service import Service
 import pandas as pd
+from datetime import datetime
 
 # Check Chrome browser version if match/compatible with chromedriver
 def check_versions(cdriver_os):
@@ -123,6 +124,8 @@ def get_one_page_data(driver):
         driver.switch_to.window(driver.window_handles[0])
     return pd.DataFrame(data_dict)
 
-def generate_csv(df):
-    df.to_csv("records.csv",index=False)
-    print("Generated/Updated 'records.csv'!")
+def generate_csv(df,prof,keyword):
+    timestamp = round(datetime.now().timestamp())
+    filename = f"records_{timestamp}_({prof}+{keyword}).csv"
+    df.to_csv(filename,index=False)
+    print(f"Generated/Updated '{filename}'!")
