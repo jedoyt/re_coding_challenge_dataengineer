@@ -40,6 +40,7 @@ The script should be written to be able to easily adapt to returning a different
 5. Once you see the prompt, `Generated report file: 'records_xxxxxxxxxx_(xxxxx+xxxxx>).csv'!`, go to the project folder to see the report as a csv file having this filename format; `records_<timestamp>_(<profession+keyword>).csv`.
 
 **ALTERNATIVE STEPS 4 & 5 (if `main.py` fails due to unresolved incompatibility between the local browser and web driver):**
+
 4. Run `test.py`
   - This script now utilizes the webdriver-manager package that would finally resolve the compatibility issues
 5. Once you see the prompt, `Generated report file: 'records_xxxxxxxxxx_(xxxxx+xxxxx>).csv'!`, go to the project folder to see the report as a csv file having this filename format; `records_<timestamp>_(<profession+keyword>).csv`.
