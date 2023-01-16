@@ -101,23 +101,39 @@ def get_one_page_data(driver):
 
     # Scraping in for loop iteration on results from the current page
     for i in pros_indices:
-        print(f"Fetching data: index-{i}...")
-        
+        print(f"Fetching data: index-{i}...")        
         data = a_tags[i]
         print(f"Data found:",data.text)
-        print("Accessed Element:", data)
         data.click() # Opens a new tab
         driver.switch_to.window(driver.window_handles[1]) # Switches to the new tab
         # Fetch the data from the new tab containing the information about the professional
         data_dict['firstname'].append(driver.find_element(By.ID, '_ctl27__ctl1_first_name').text)
         data_dict['middlename'].append(driver.find_element(By.ID, '_ctl27__ctl1_m_name').text)
         data_dict['lastname'].append(driver.find_element(By.ID, '_ctl27__ctl1_last_name').text)
-        data_dict['license_no'].append(driver.find_element(By.ID, '_ctl36__ctl1_license_no').text)
-        data_dict['license_type'].append(driver.find_element(By.ID, '_ctl36__ctl1_license_type').text)
-        data_dict['status'].append(driver.find_element(By.ID, '_ctl36__ctl1_status').text)
-        data_dict['orig_issue_date'].append(driver.find_element(By.ID, '_ctl36__ctl1_issue_date').text)
-        data_dict['expiry'].append(driver.find_element(By.ID, '_ctl36__ctl1_expiry').text)
-        data_dict['renewed'].append(driver.find_element(By.ID, '_ctl36__ctl1_last_ren').text)
+        try:
+            data_dict['license_no'].append(driver.find_element(By.ID, '_ctl36__ctl1_license_no').text)
+        except:
+            data_dict['license_no'].append(driver.find_element(By.ID, '_ctl39__ctl1_license_no').text)
+        try:
+            data_dict['license_type'].append(driver.find_element(By.ID, '_ctl36__ctl1_license_type').text)
+        except:
+            data_dict['license_type'].append(driver.find_element(By.ID, '_ctl39__ctl1_license_type').text)
+        try:
+            data_dict['status'].append(driver.find_element(By.ID, '_ctl36__ctl1_status').text)
+        except:
+            data_dict['status'].append(driver.find_element(By.ID, '_ctl39__ctl1_status').text)
+        try:
+            data_dict['orig_issue_date'].append(driver.find_element(By.ID, '_ctl36__ctl1_issue_date').text)
+        except:
+            data_dict['orig_issue_date'].append(driver.find_element(By.ID, '_ctl39__ctl1_issue_date').text)
+        try:
+            data_dict['expiry'].append(driver.find_element(By.ID, '_ctl36__ctl1_expiry').text)
+        except:
+            data_dict['expiry'].append(driver.find_element(By.ID, '_ctl39__ctl1_expiry').text)
+        try:
+            data_dict['renewed'].append(driver.find_element(By.ID, '_ctl36__ctl1_last_ren').text)
+        except:
+            data_dict['renewed'].append(driver.find_element(By.ID, '_ctl39__ctl1_last_ren').text)
 
         btn_close = driver.find_element(By.NAME, "btn_close")
         btn_close.click()
@@ -128,4 +144,4 @@ def generate_csv(df,prof,keyword):
     timestamp = round(datetime.now().timestamp())
     filename = f"records_{timestamp}_({prof}+{keyword}).csv"
     df.to_csv(filename,index=False)
-    print(f"Generated/Updated '{filename}'!")
+    print(f"Generated report file: '{filename}'!")

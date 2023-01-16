@@ -10,11 +10,23 @@ print(check_versions(machine_os))
 
 # Field Inputs
 print("Input data on required fields to proceed.")
-print("List of Professional Licenses:\n")
-print([ 'All', 'Certified Pharmacy Technician', 'Intern - Graduate', 'Intern - Student',
-        'Non-Resident Pharmacist', 'Non-Resident PIC', 'Pharmacist', 'Pharmacy Technician', 'Pharmacy Technician in Training', 
-        'Practitioner Controlled Substance', 'Researcher Controlled Substance', 'Student Pharmacy Technician'])
-licensetype_select = str(input("Enter profession: "))
+print("List of Professional Licenses:")
+print(  "All, Certified Pharmacy Technician, Intern - Graduate, Intern - Student,\n",
+        "Non-Resident Pharmacist, Non-Resident PIC, Pharmacist, Pharmacy Technician,\n",
+        "Pharmacy Technician in Training, Practitioner Controlled Substance,\n",
+        "Researcher Controlled Substance, Student Pharmacy Technician")
+
+list_of_professionals = ['All', 'Certified Pharmacy Technician', 'Intern - Graduate', 'Intern - Student',
+'Non-Resident Pharmacist', 'Non-Resident PIC', 'Pharmacist', 'Pharmacy Technician', 'Pharmacy Technician in Training',
+'Practitioner Controlled Substance', 'Researcher Controlled Substance', 'Student Pharmacy Technician'
+]
+
+
+licensetype_select = str(input("Enter profession (Choose only from the list above): "))
+while licensetype_select not in list_of_professionals:
+    print("Profession not found. Please select only from the list above.")
+    licensetype_select = str(input("Enter profession (Choose only from the list above): "))
+
 lastname_str = str(input("Enter keyword for Last Name field: "))
 # Other License options: 'All', 'Certified Pharmacy Technician', 'Intern - Graduate', 'Intern - Student',
 # 'Non-Resident Pharmacist', 'Non-Resident PIC', 'Pharmacist', 'Pharmacy Technician', 'Pharmacy Technician in Training', 
