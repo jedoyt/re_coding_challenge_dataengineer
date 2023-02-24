@@ -54,17 +54,13 @@ pagination_indices = [a_tags.index(tag) for tag in a_tags if tag.text.isnumeric(
 
 page_link_elems = [tag for tag in a_tags if tag.text.isnumeric()]
 
-#print("No. of '<a>' tags:",len(a_tags))
-#print("No. of Professionals:", len(pros_indices))
-#print("No. of page results:", len(pagination_indices))
-#print("Professionals:",pros_indices)
-#print("Pagination indices:",pagination_indices)
 print("Page Result Links:", [elem.text for elem in page_link_elems])
 
 # Create initial DataFrame
 data_dict = {"firstname":[],
                 "middlename": [],
                 "lastname": [],
+                "facilityname":[],
                 "license_no": [],
                 "license_type": [],
                 "status": [],

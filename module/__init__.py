@@ -84,6 +84,7 @@ def get_one_page_data(driver):
             "firstname":[],
             "middlename": [],
             "lastname": [],
+            "facilityname": [],
             "license_no": [],
             "license_type": [],
             "status": [],
@@ -110,6 +111,7 @@ def get_one_page_data(driver):
         data_dict['firstname'].append(driver.find_element(By.ID, '_ctl27__ctl1_first_name').text)
         data_dict['middlename'].append(driver.find_element(By.ID, '_ctl27__ctl1_m_name').text)
         data_dict['lastname'].append(driver.find_element(By.ID, '_ctl27__ctl1_last_name').text)
+        data_dict['facilityname'].append(driver.find_element(By.ID, '_ctl27__ctl1_facility_name').text)
         try:
             data_dict['license_no'].append(driver.find_element(By.ID, '_ctl36__ctl1_license_no').text)
         except:
